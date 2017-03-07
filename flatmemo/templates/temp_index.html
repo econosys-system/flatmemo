@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{$config.page_title|escape}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="{$config.root_uri}/bootstrap/bootswatch/{$appearance.bootswatch_name}/bootstrap.min.css" media="screen">
+<link rel="stylesheet" href="{$config.root_uri}/css/parts.css">
+<link rel="stylesheet" href="{$config.root_uri}/css/flatmemo.css">
+<link rel="stylesheet" href="{$config.root_uri}/font-awesome/css/font-awesome.min.css">
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js" defer></script>
+<script src="{$config.root_uri}/bootstrap/bootstrap.min.js" defer></script>
+<script src="{$config.root_uri}/js/flatmemo.js" defer></script>
+{if $config.private_link_mode==1}<script src="{$config.root_uri}/js/jquery_kill_referrer.js" defer></script>{/if}
+{if $config.rss_feed}<link rel="alternate" type="application/rss+xml" title="RSS" href="{$config.rss_feed}" />{/if}
+<!--[if lt IE 9]>
+<script src="./bootstrap/html5shiv.js" defer></script>
+<script src="./bootstrap/respond.min.js" defer></script>
+<![endif]-->
+
+</head>
+<body>
+
+{include file="inc/header.html"}
+
+
+
+<div class="container">
+
+<div class="row mb15">
+<div class="col-xs-6 col-sm-6">
+<h1>{if $cmd == 'closet'}押入れ{else}カテゴリ{/if}</h1>
+</div>
+
+<div class="col-sm-6 mt20 hidden-xs">
+<div class="pull-right">
+<a href="{$config.admin_uri}?cmd=category_edit_input" ><i class="fa fa-file-text"></i> カテゴリの編集</a>　　
+<a href="{$config.admin_uri}?cmd=category_turn_input"><i class="fa fa-list"></i> カテゴリの順番変更</a>　　
+<a href="{$config.admin_uri}?cmd=tag_edit_input" ><i class="fa fa-file-text"></i> タグの編集</a>
+</div>
+</div>
+
+</div><!-- /.row .page-header -->
+
+
+<div class="row">
+{ foreach from=$category_loop key="k" item="v" name="loopname"}
+<div class="col-sm-6 mt10">
+<div class="row">
+<div class="col-xs-2 col-sm-3 col-md-2">
+<div class="fm_icon2">
+<a href="{$_program_uri}/category/{$v.category_id}"><p style="background-image: url({$config.icon_uri}/{if $v.icon_file_name}{$v.icon_file_name}{else}noicon.jpg{/if})"></p></a>
+</div>
+</div>
+<div class="col-xs-10 col-sm-9 col-md-10 fm_cate_name">
+<a href="{$_program_uri}/category/{$v.category_id}">{$v.category_name}</a>
+</div>
+</div>
+</div>
+{ /foreach }
+</div><!-- /.row -->
+
+
+{if $cmd!='closet'}
+<div id="fm_closet">
+<a href="javascript:_closet();" title="トップページから隠しているカテゴリを表示します"><i class="fa fa-file-text"></i> closet <small>(押入れ)</small></a><br />
+<a href="javascript:_draft();" title="下書きのエントリを表示します"><i class="fa fa-file-text"></i> draft <small>(下書き)</small></a>
+</div>
+{/if}
+
+</div><!-- /.container -->
+
+{include file="inc/footer.html"}
+
+<!-- access_analyzer -->
+{$config.access_analyzer}
+<!-- /access_analyzer -->
+
+</body>
+</html>

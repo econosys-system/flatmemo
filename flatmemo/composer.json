@@ -1,0 +1,8 @@
+{
+    "require": {
+        "cebe/markdown": "^1.1",
+        "pear/http_request2": "^2.3",
+        "pear/net_url2": "^2.2",
+        "hatenasyntax/hatenasyntax": "^1.0"
+    }
+}

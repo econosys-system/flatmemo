@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{$q|escape}の検索結果</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="{$config.root_uri}/bootstrap/bootswatch/{$appearance.bootswatch_name}/bootstrap.min.css" media="screen">
+<link rel="stylesheet" href="{$config.root_uri}/css/parts.css">
+<link rel="stylesheet" href="{$config.root_uri}/css/flatmemo.css">
+<link rel="stylesheet" href="{$config.root_uri}/font-awesome/css/font-awesome.min.css">
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js" defer></script>
+<script src="{$config.root_uri}/bootstrap/bootstrap.min.js" defer></script>
+<script src="{$config.root_uri}/js/flatmemo.js" defer></script>
+{if $config.private_link_mode==1}<script src="{$config.root_uri}/js/jquery_kill_referrer.js" defer></script>{/if}
+{if $config.rss_feed}<link rel="alternate" type="application/rss+xml" title="RSS" href="{$config.rss_feed}" />{/if}
+<!--[if lt IE 9]>
+<script src="./bootstrap/html5shiv.js" defer></script>
+<script src="./bootstrap/respond.min.js" defer></script>
+<![endif]-->
+
+</head>
+<body>
+
+{include file="inc/header.html"}
+
+
+
+<div class="container">
+
+
+{$hidden}
+<h1>「{$q|escape}」の検索結果</h1>
+
+{$config.ad_search}
+
+{if count($category_loop)>0 }<h3>「{$q|escape}」にマッチしたカテゴリ</h3>{/if}
+<div class="row">
+{ foreach from=$category_loop key="k" item="v" name="loopname"}
+<div class="col-sm-6">
+<div class="row">
+<div class="col-sm-3 col-md-2">
+<div class="fm_icon2">
+<a href="{$_program_name}/category/{$v.category_id}"><p style="background-image: url({$config.icon_uri}/{if $v.icon_file_name}{$v.icon_file_name}{else}noicon.jpg{/if})"></p></a>
+</div>
+</div>
+<div class="col-sm-9 col-md-10 fm_cate_name">
+<a href="{$_program_name}/category/{$v.category_id}">{$v.category_name|escape}</a>
+</div>
+</div>
+</div>
+{ /foreach }
+</div><!-- /.row -->
+
+
+
+<h3 class="mt50">「{$q|escape}」にマッチしたデータ</h3>
+{ foreach from=$data_loop key="k" item="v" name="loopname"}
+{ if $config.use_html_archive ==1 }{assign var="permalink"  value="`$config.data_apath`/archives/`$v.data_id`.html" }
+{ else }{assign var="permalink"  value="`$_program_uri`/archive/`$v.data_id`" }
+{ /if }
+<div class="searchresult">
+<h3 class="mb1"><a href="{$permalink}">{$v.title_name|escape}</a></h3>
+<div class="well mb5">{$v.text_name|mbtruncate:300|escape}</div>
+</div>
+{ /foreach }
+
+
+{if count($data_loop_tag)>0 }<h3 class="mt50">「{$q|escape}」にマッチした <i class="fa fa-tags"></i>タグ
+{ foreach from=$matched_tag_name_loop key="tk" item="tv" }「{$tv|escape}」{ /foreach }を持つデータ</h3>
+{/if}
+{ foreach from=$data_loop_tag key="k" item="v" name="loopname"}
+{ if $config.use_html_archive ==1 }{assign var="permalink"  value="`$config.data_apath`/archives/`$v.data_id`.html" }
+{ else }{assign var="permalink"  value="`$_program_uri`/archive/`$v.data_id`" }
+{ /if }
+<div class="searchresult">
+<h3 class="mb1"><a href="{$permalink}">{$v.title_name|escape}</a></h3>
+<div class="well mb5">{$v.text_name|escape}</div>
+</div>
+{ /foreach }
+
+
+</div>
+
+{$config.ad_search}
+
+
+</div><!-- /.container -->
+
+
+
+
+{include file="inc/footer.html"}
+
+
+
+{$config.access_analyzer}
+
+</body>
+</html>
+<!-- temp_searchresult.html -->

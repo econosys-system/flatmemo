@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{if $cmd=="archive" || $cmd=="write_process" || $cmd == "rewrite_all_process" }{$data_loop.0.title_name|escape}｜{$config.page_title}{else}{$category_name}{if $tag_name}｜{$tag_name|escape}{/if}｜{$config.page_title}{/if}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="{$config.root_uri}/bootstrap/bootswatch/{$appearance.bootswatch_name}/bootstrap.min.css" media="screen">
+<link rel="stylesheet" href="{$config.root_uri}/css/parts.css">
+<link rel="stylesheet" href="{$config.root_uri}/css/flatmemo.css">
+<link rel="stylesheet" href="{$config.root_uri}/font-awesome/css/font-awesome.min.css">
+<!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js" defer></script> -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"  defer></script>
+<script src="{$config.root_uri}/bootstrap/bootstrap.min.js" defer></script>
+<script src="{$config.root_uri}/js/flatmemo.js" defer></script>
+{if $config.private_link_mode==1}<script src="{$config.root_uri}/js/jquery_kill_referrer.js" defer></script>{/if}
+<!--[if lt IE 9]>
+<script src="./bootstrap/html5shiv.js" defer></script>
+<script src="./bootstrap/respond.min.js" defer></script>
+<![endif]-->
+</head>
+<body>
+
+{include file="inc/header.html"}
+
+<div class="container">
+
+<div class="row mb10">
+
+<div class="col-sm-6">
+<div class="row">
+<div class="col-sm-3 col-md-2">
+<div class="fm_icon2">
+<a href="{$_program_uri}/category/{$category_id}"><p style="background-image: url({$config.icon_uri}/{if $icon_file_name}{$icon_file_name}{else}noicon.jpg{/if})"></p></a>
+</div>
+</div>
+<div class="col-sm-9 col-md-10 fm_cate_name">
+<a href="{$_program_name}/category/{$category_id}">{$category_name|escape}</a>
+</div>
+</div>
+<p class="mt10"><a href="{$config.memo_uri}"><i class="fa fa-arrow-left"></i> <small>トップに戻る</small></a></p>
+</div>
+
+<div class="col-sm-2">
+{if $cmd != 'draft'}<a href="javascript:_a({$category_id});" class="icontext"><i class="fa fa-file"></i> 新規投稿</a>{/if}
+</div>
+
+<div class="col-sm-4">
+<div class="fm_tag_area">
+<p class="fm_label"><i class="fa fa-tags"></i> tags</p>
+{ foreach from=$now_category_tag_loop key="k" item="v" name="loopname"}
+{ if $v.tag_name }<div class="fm_t_t"><a href="{$_program_name}/category/{$category_id}/tag/{$v.tag_name|escape:'url'}/">{$v.tag_name|escape}</a></div><div class="fm_t_c">[{$v.tag_count_no}]</div>{/if}
+{ /foreach }
+</div>
+</div>
+
+</div><!-- /.row -->
+
+<div class="row">
+<div class="col-xs-12">
+{if $desc_name}<h1 class="fm_cate_title">{$desc_name|escape|nl2br}{if $tag_name}：<small>タグ「{$tag_name|escape}」での検索</small>{/if}</h1>
+{elseif $tag_name}<h1 class="fm_cate_title"><small>タグ「{$tag_name|escape}」での検索</small></h1>
+{/if}
+</div>
+</div><!-- /.row -->
+
+<div class="row">
+<div class="col-xs-6">
+<form>
+<select name="fm_linkmenu" id="fm_linkmenu" class="form-control" onchange="location.href=('{$_program_name}/category/{$category_id}#'+document.getElementById('fm_linkmenu').value ); ">
+<option value="">クイックリンク</option>
+{ foreach from=$quicklink_loop key="k" item="v" name="loopname"}
+<option value="linkmenu{$v.data_id}">{$v.title_name|escape}</option>
+{ /foreach }
+</select>
+</form>
+</div>
+</div><!-- /.row -->
+
+<div class="row fm_ad_quicklink">
+<div class="col-xs-9">
+<!-- ad_quicklink-->
+{$config.ad_quicklink}
+<!-- /ad_quicklink-->
+</div>
+</div><!-- /.row -->
+
+
+{ foreach from=$data_loop key="k" item="v" name="loopname" }
+{assign var="permalink"  value="`$_program_uri`/archive/`$v.data_id`" }
+<a name="linkmenu{$v.data_id}"></a>
+<div class="row { if $smarty.foreach.loopname.first }fm_row_first{ else }fm_row{ /if }">
+
+<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fm_data_left">
+<h2 class="fm_data_head" id="h{$v.data_id}"><span class="fm_t_id">{if $appearance.fm_t_id_kbn == 'number'}{$v.data_id}{else}<i class="{$appearance.fm_t_id_icon_class_name}"></i>{/if}</span><a href="{$permalink}" title="permalink" >{$v.title_name|escape}</a></h2>
+
+<div>
+{if $v.hatena_flag=='on'}{$v.text_name|kihou_hatena}
+{elseif $v.markdown_flag=='on'}{$v.text_name|kihou_markdown}
+{else}{$v.text_name|kihou_flatmemo}
+{/if}
+</div>
+
+
+{ if $smarty.foreach.loopname.iteration < 4 }
+<!-- ad_contents-->
+<div class="mb8">
+{$config.ad_contents}
+</div>
+<!-- /ad_contents-->
+{ /if }
+
+
+{if $related_loop}
+<div class="fm_related_entry">
+<p><i class="fa fa-info-circle"></i> 関連エントリー</p>
+<ul>
+{ foreach from=$related_loop key="rk" item="rv" }
+{ if $config.use_html_archive ==1 }<li><a href="{$config.data_apath}/archives/{$rv.data_id}.html">{$rv.title_name|escape}</a></li>
+{ else }<li><a href="{$_program_name}/archive/{$rv.data_id}">{$rv.title_name|escape}</a></li>
+{ /if }
+{ /foreach }
+</ul>
+</div>
+{/if}
+
+
+<div id="atch_{$v.data_id}" class="{if $appearance.view_attach_in_data_flg==0}fm_attach_hide{else}fm_attach_show{/if}">
+{ foreach from=$v.attach_en_loop key="ak" item="av" name="aloopname"}
+{ math equation=a-1 a=$smarty.foreach.aloopname.iteration assign=i }
+<div class="fm_attach_left">添付ファイル{$smarty.foreach.aloopname.iteration}</div>
+<div class="fm_attach_right"><a href="{$config.data_file_uri}/{$av}?{0|rand:999}" target="_blank">{$v.attach_jp_loop.$i}</a> <span>( {"`$config.data_file_dir`/`$av`"|fsize} )</span>　<a href="javascript:_f('{$v.data_id}','{$av}')">ダウンロード</a></div>
+{ /foreach }
+</div>
+
+</div><!-- /.fm_data_left -->
+
+<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 fm_data_right">
+
+<div class="fm_no">No.{$v.data_id}</div>
+<div class="fm_date" title="{$v.koushin_date|date_format:"%Y/%m/%d"}">{$v.koushin_date|date_format:"%m/%d %H:%M"}</div>
+{if $appearance.hide_edit_menu_flg==1}<p class="fm_attach_mini"><a href="javascript:_v_menu('em_{$v.data_id}')">edit</a></p>{/if}
+<div class="fm_edit_menu" id="em_{$v.data_id}" {if $appearance.hide_edit_menu_flg==1}style="display:none;"{/if}>
+<div class="fm_edit"><a href="javascript:_e('{$v.data_id}');"><i class="fa fa-pencil-square-o"></i> edit</a></div>
+<div class="fm_delete"><a href="javascript:_d('{$v.data_id}');"><i class="fa fa-trash"></i> delete</a></div>
+</div>
+{if count($v.attach_en_loop)>0 }<p class="fm_attach_mini"><a href="javascript:_v_atch('atch_{$v.data_id}')">添付ファイル</a></p>{/if}
+
+<p class="fm_no">
+{ foreach from=$v.tag_id_loop key="tk" item="tv" name="loopname2"}
+{$tv|tag_name:$tag_master_loop}<br />
+{ /foreach }
+</p>
+</div><!-- /.fm_data_right -->
+</div><!-- /.row .fm_row-->
+{ /foreach }
+
+
+</div><!-- /.container -->
+
+
+{include file="inc/footer.html"}
+
+{$config.access_analyzer}
+
+</body>
+</html>

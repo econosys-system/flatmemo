@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml-stylesheet href="/styles-rdf.css" type="text/css"?> -->
+<rss version="2.0">
+
+<channel>
+<title>{$config.page_title|escape}</title>
+<description>{$config.page_title|escape} 新着エントリー</description>
+<link>{$_program_uri}</link>
+<language>ja-JP</language>
+<image>
+  <url>{$config.image_uri}/flatmemo.gif</url>
+  <title>{$config.page_title|escape}</title>
+  <link>{$_program_uri}</link>
+  <width>92</width>
+  <height>22</height>
+</image>
+{if $data_loop}
+	<lastBuildDate>{$data_loop[0].koushin_date|date_format:"%a, %d %b %Y %H:%M:%S"} +0900</lastBuildDate>
+	<pubDate>{$data_loop[0].koushin_date|date_format:"%a, %d %b %Y %H:%M:%S"} +0900</pubDate>
+{/if}
+
+{if $flag == 'legacy'}
+<item>
+<title>RSS移動のお知らせ</title>
+<link>{$config.rss_feed}</link>
+<description><![CDATA[
+この度RSSのURLが新しくなりました。新しいRSSは
+{$config.rss_feed}
+または
+{$_program_uri}/rss
+です。
+新URLでの登録をお願いします。
+]]></description>
+<pubDate>{$smarty.now|date_format:"%a, %d %b %Y %H:%M:%S"} +0900</pubDate>
+</item>
+{/if}
+
+{ foreach from=$data_loop key="k" item="v" name="loopname"}
+<item>
+<title>{$v.title_name|escape}</title>
+<link>{$_program_uri}/archive/{$v.data_id}</link>
+<description><![CDATA[
+{$v.text_name|mbtruncate:400|escape}
+]]></description>
+<pubDate>{$v.koushin_date|date_format:"%a, %d %b %Y %H:%M:%S"} +0900</pubDate>
+</item>
+{/foreach}
+
+</channel>
+</rss>

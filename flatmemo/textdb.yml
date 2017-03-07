@@ -1,0 +1,120 @@
+data:
+    charset : UTF-8
+    desc    : 
+        -
+           - data_id
+           - int
+        -
+           - title_name
+           - int
+        -
+           - text_name
+           - int
+        -
+           - touroku_date
+           - int
+        -
+           - koushin_date
+           - int
+        -
+           - autolink_flag
+           - int
+        -
+           - category_id
+           - int
+        -
+           - user_no
+           - int
+        -
+           - tag_id
+           - csv
+        -
+           - attach_en
+           - csv
+        -
+           - attach_jp
+           - csv
+        -
+           - comment_user_name_off
+           - int
+        -
+           - comment_text_name_off
+           - int
+        -
+           - hatena_flag
+           - char
+        -
+           - markdown_flag
+           - char
+        -
+           - draft_flag
+           - char
+
+
+
+
+category:
+    charset : UTF-8
+    desc    : 
+        -
+           - category_id
+           - int
+        -
+           - category_name
+           - char
+        -
+           - icon_file_name
+           - char
+        -
+           - view_mode
+           - char
+        -
+           - desc_name
+           - char
+
+
+
+tag:
+    charset : UTF-8
+    desc    : 
+        -
+           - tag_id
+           - int
+        -
+           - tag_name
+           - char
+
+
+
+appearance:
+    charset : UTF-8
+    desc    : 
+        -
+           - appearance_id
+           - int
+        -
+           - bootswatch_name
+           - text
+           - bootswatchテーマ名
+        -
+           - navbar_name
+           - text
+           - ナビゲーションバーの色（クラス名）（値は【default】【inverse】のどちらかになる）
+        -
+           - fm_t_id_kbn
+           - text
+           - データヘッドの表示（値は【number：番号表示】【icon：アイコン表示】のどちらかになる）
+        -
+           - fm_t_id_icon_class_name
+           - text
+           - データヘッドのアイコンクラス名（値は【number：番号表示】【icon：アイコン表示】のどちらかになる）
+        -
+           - view_attach_in_data_flg
+           - text
+           - データ内に「添付ファイル」の項目を表示させるかどうか（1 : 表示させる　　　0 : 表示させない）
+        -
+           - hide_edit_menu_flg
+           - text
+           - [edit][delete]のメニューを隠すかどうか（1 : 隠す　　　0 : 隠さない）
+
+

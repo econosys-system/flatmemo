@@ -1,0 +1,63 @@
+#image_drop_area {
+	text-align: center;
+	padding: 20px 0;
+	height: 70px;
+	width: 100%;
+	color: #666;
+	background-color: #f9f9f9;
+	border: 4px dotted #bbb;
+}
+.dragover {
+	color: #111               !important;
+	background-color: #f1f1f1 !important;
+	border: 4px dotted #777   !important;
+}
+.dz-preview {
+	margin: 5px 0;
+	padding: 10px;
+	float: left;
+	background-color: #F5F5F5;
+	border-radius: 5px;
+}
+.dz-details {
+	padding: 0;
+}
+.dz-filename , .dz-size, .dz-my-separator , .dz-remove {
+	font: 11px "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+.dz-filename , .dz-my-separator, .dz-size , .dz-error-message {
+	float: left;
+}
+.dz-my-separator {
+	width: 20px;
+	text-align: center;
+}
+.dz-size {
+	margin-top: 1px;
+}
+.dz-progress {
+	width: 500px;
+}
+.dz-progress .dz-upload {
+	display: block;
+	border: 5px solid #1E9BFF;
+	border-radius: 2px;
+}
+.dz-remove {
+	float: left;
+	margin-left: 5px;
+}
+.dz-thumbnail {
+	margin-bottom: 3px;
+}
+.fa-check-circle:before {
+	color: #93C54B;
+}
+.dz-thumbnail , .dz-success-mark {
+	display: block;
+	float: left;
+}
+.dz-success-mark {
+	height: 25px;
+	margin-left: 5px;
+}
