@@ -86,7 +86,11 @@
 
 
 { foreach from=$data_loop key="k" item="v" name="loopname" }
-{assign var="permalink"  value="`$_program_uri`/archive/`$v.data_id`" }
+
+{ if $config.use_html_archive ==1 }{assign var="permalink"  value="`$config.data_apath`/archives/`$v.data_id`.html" }
+{ else }{ assign var="permalink"  value="`$_program_uri`/archive/`$v.data_id`" }
+{ /if }
+
 <a name="linkmenu{$v.data_id}"></a>
 <div class="row { if $smarty.foreach.loopname.first }fm_row_first{ else }fm_row{ /if }">
 
