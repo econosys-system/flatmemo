@@ -41,6 +41,8 @@ use_html_archive: 0
 # use_html_archive:1 の時 すべてのhtmlを生成し直すか？（ 【1】生成する    【0】生成しない ）
 recreate_html_archive: 0
 
+# 絵文字 😄😄😄 の入力パレットを表示するか？
+emoji: 1
 
 # 管理者モード【1】の時データの登録、編集、削除時にパスワードを要求します
 admin_use_password: 1

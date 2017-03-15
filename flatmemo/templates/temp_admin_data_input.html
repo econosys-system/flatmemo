@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="{$config.root_uri}/css/flatmemo.css">
 <link rel="stylesheet" href="{$config.root_uri}/font-awesome/css/font-awesome.min.css">
 
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="{$config.root_uri}/bootstrap/bootstrap.min.js" defer></script>
 <script src="{$config.root_uri}/js/flatmemo.js" defer></script>
 <script src="{$config.root_uri}/js/jquery_kill_referrer.js" defer></script>
@@ -18,18 +18,36 @@
 <script src="{$config.root_uri}/js/dropzone_config.js"></script>
 <link rel="stylesheet" href="{$config.root_uri}/js/dropzone.css">
 
-{* OFF
-<script src="{$config.root_uri}/js/uploadify/swfobject.js" defer></script>
-<script src="{$config.root_uri}/js/uploadify/jquery.uploadify.min.js" defer></script>
-<link rel="stylesheet" href="{$config.root_uri}/js/uploadify/uploadify.css">
-OFF *}
-
-<!--[if lt IE 9]>
-<script src="./bootstrap/html5shiv.js" defer></script>
-<script src="./bootstrap/respond.min.js" defer></script>
-<![endif]-->
-
 <script type="text/javascript" src="{$config.root_uri}/js/autoresize.jquery.js" defer></script>
+
+<!-- jquery-emoji-picker -->
+{ if $config.emoji == 1 }
+<link rel="stylesheet" type="text/css" href="{$config.root_uri}/emoji/jquery-emoji-picker/css/jquery.emojipicker.css">
+<link rel="stylesheet" type="text/css" href="{$config.root_uri}/emoji/jquery-emoji-picker/css/jquery.emojipicker.a.css">
+<style type="text/css">
+	.emojiPickerIcon{ldelim}
+		border-radius: 3px;
+		width        : 35px !important;
+		height       : 35px !important;
+		top          : 2px !important;
+		right        : 2px !important;
+	{rdelim}
+</style>
+<script type="text/javascript" src="{$config.root_uri}/emoji/jquery-emoji-picker/js/jquery.emojipicker.js"></script>
+<script type="text/javascript" src="{$config.root_uri}/emoji/jquery-emoji-picker/js/jquery.emojis.js"></script>
+<script>
+{literal}
+$(document).ready(function(){
+	$('.emoji').emojiPicker({
+	height: '300px',
+	width:  '450px'
+	});
+});
+{/literal}
+</script>
+{ /if }
+<!-- jquery-emoji-picker -->
+
 {literal}
 <script type="text/javascript">
 $(document).ready(function(){
@@ -128,12 +146,12 @@ $(document).ready(function() {
 
 <div class="row">
 <div class="col-sm-2">タイトル</div>
-<div class="col-sm-10"><input name="title_name" type="text" id="title_name"  class="form-control" /></div>
+<div class="col-sm-10"><input name="title_name" type="text" id="title_name"  class="form-control emoji"></div>
 </div>
 
 <div class="row mt5">
 <div class="col-sm-2">テキスト</div>
-<div class="col-sm-10"><textarea name="text_name" cols="70" rows="12"  class="form-control" id="text_name"></textarea></div>
+<div class="col-sm-10"><textarea name="text_name" cols="70" rows="12"  class="form-control emoji" id="text_name"></textarea></div>
 </div>
 
 <div class="row">

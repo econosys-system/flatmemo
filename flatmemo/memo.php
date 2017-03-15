@@ -7,6 +7,7 @@
 // version 2.02 最近のメモ取得のbug-fix
 // version 2.04 minimalauth導入
 // version 2.10 PHP7対応
+// version 2.11 emoji対応
 
 require_once "./flatframe.php";
 require_once "vendor/autoload.php";
@@ -62,10 +63,10 @@ class ff_memo extends flatframe
         }
         $this->_ff_config['memo_uri']      = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['memo_file']);
         $this->_ff_config['admin_uri']     = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['admin_file']);
-        // $this->_ff_config['image_uri']     = $this->_make_uri($this->q['_program_uri'],$this->_ff_config['image_dir']);
         $this->_ff_config['data_file_uri'] = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['data_file_dir']);
         $this->_ff_config['icon_uri']      = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['icon_dir']);
         $this->_ff_config['data_apath']    = $this->_make_apath($this->q['_program_uri'], $this->_ff_config['data_dir']);
+        $this->_ff_config['base_path']     = $this->_make_apath($this->q['_program_uri'], '.');
         $this->template->assign(array("config" => $this->_ff_config));
     }
 
@@ -713,7 +714,7 @@ class ff_memo extends flatframe
 
 
 
-    //========== _make_apath：version 1.0
+    //========== _make_apath : version 1.0
     public function _make_apath($base='', $rel_path='')
     {
         $base = preg_replace('/\/[^\/]+$/', '/', $base);
