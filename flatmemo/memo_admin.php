@@ -8,6 +8,7 @@
 // version 2.04 minimalauth導入
 // version 2.10 PHP7対応
 // version 2.11 emoji対応
+// version 2.12 [fix] configの無駄な設定 image_dir 削除
 
 require_once "./flatframe.php";
 require_once "./flatframe/textdb.php";
@@ -135,11 +136,11 @@ class ff_memo_admin extends flatframe
         // config
         $this->_ff_config['memo_uri'] = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['memo_file']);
         $this->_ff_config['admin_uri'] = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['admin_file']);
-        $this->_ff_config['image_uri']   = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['image_dir']);
+        // OFF $this->_ff_config['image_uri']   = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['image_dir']);
         $this->_ff_config['data_file_uri'] = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['data_file_dir']);
         $this->_ff_config['script_uri'] = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['script_dir']);
         $this->_ff_config['icon_uri']  = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['icon_dir']);
-        $this->_ff_config['image_apath'] = $this->_make_apath($this->q['_program_uri'], $this->_ff_config['image_dir']);
+        // OFF $this->_ff_config['image_apath'] = $this->_make_apath($this->q['_program_uri'], $this->_ff_config['image_dir']);
         $this->_ff_config['admin_apath'] = $this->_make_apath($this->q['_program_uri'], $this->_ff_config['admin_file']);
         $this->template->assign(array("config" => $this->_ff_config));
 
@@ -1179,11 +1180,10 @@ DOC_END;
             }
         }
 
-        $this->_ff_config['image_apath'] = $this->_make_apath($this->q['_program_uri'], $this->_ff_config['image_dir']);
+        // OFF $this->_ff_config['image_apath'] = $this->_make_apath($this->q['_program_uri'], $this->_ff_config['image_dir']);
         $this->_ff_config['admin_apath'] = $this->_make_apath($this->q['_program_uri'], $this->_ff_config['admin_file']);
         $this->_ff_config['data_apath'] = $this->_make_apath($this->q['_program_uri'], $this->_ff_config['data_dir']);
         $this->template->assign(array("config" => $this->_ff_config));
-//$this->dump( $this->_ff_config ); die;
         $this->q['_program_uri'] = preg_replace('/_admin/', '', $this->q['_program_uri']);
         $this->q['_program_name'] = preg_replace('/_admin/', '', $this->q['_program_name']);
 
