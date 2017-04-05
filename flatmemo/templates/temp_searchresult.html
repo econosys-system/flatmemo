@@ -32,7 +32,7 @@
 {$hidden}
 <h1>「{$q|escape}」の検索結果</h1>
 
-{$config.ad_search}
+{$config.ad_quicklink}
 
 {if count($category_loop)>0 }<h3>「{$q|escape}」にマッチしたカテゴリ</h3>{/if}
 <div class="row">
@@ -80,9 +80,10 @@
 { /foreach }
 
 
+{$config.ad_search}
+
 </div>
 
-{$config.ad_search}
 
 
 </div><!-- /.container -->
