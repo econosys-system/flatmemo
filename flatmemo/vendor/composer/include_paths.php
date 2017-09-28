@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     $vendorDir . '/pear/pear_exception',
     $vendorDir . '/pear/http_request2',
+    $vendorDir . '/pear/net_url2',
 );

@@ -9,6 +9,7 @@
 // version 2.10 PHP7対応
 // version 2.11 emoji対応
 // version 2.13 [fix] minimalauth判別ロジックの修正
+// version 2.14 [add] whitelist追加
 
 require_once "./flatframe.php";
 require_once "vendor/autoload.php";
@@ -20,7 +21,7 @@ class ff_memo extends flatframe
     //==========
     public function __construct($configfile)
     {
-        $this->_ff_configfile=$configfile;
+        $this->_ff_configfile = $configfile;
     }
 
 
@@ -47,6 +48,7 @@ class ff_memo extends flatframe
     //========== app_prerun
     public function app_prerun()
     {
+        if ( ! $this->_check_whitelist() ){ die("IP ({$_SERVER['REMOTE_ADDR']}) が whitelistと適合しません");}
         $this->_set_session_param();
         if (@$this->_ff_config['flatmemo_all_password']) {
             require_once "exminimalauth.php";
@@ -811,6 +813,37 @@ class ff_memo extends flatframe
         ini_set('session.gc_probability', 1);            // gc_probability/gc_divisor の確率でガベージコレクション
         ini_set('session.gc_divisor', 100);
     }
+
+
+
+    //========== _check_whitelist
+    public function _check_whitelist()
+    {
+        if ( @$this->_ff_config['whitelist'] ) {
+            $checker = new Whitelist\Check();
+            try {
+                $checker->whitelist( $this->_ff_config['whitelist'] );
+            }
+            catch (InvalidArgumentException $e) {
+                // thrown when an invalid definition is encountered
+                return false;
+            }
+
+            if ( ! @$_SERVER['REMOTE_ADDR'] ){ return false; }
+            $c = $checker->check($_SERVER['REMOTE_ADDR']);
+            // $this->dump( var_export($c) );
+            return $c;
+        } else {
+            return true;
+        }
+    }
+
+
+
+
+
+
+
 }
 
 

@@ -10,6 +10,7 @@
 // version 2.11 emoji対応
 // version 2.12 [fix] configの無駄な設定 image_dir 削除
 // version 2.13 [fix] minimalauth判別ロジックの修正
+// version 2.14 [add] whitelist追加
 
 require_once "./flatframe.php";
 require_once "./flatframe/textdb.php";
@@ -70,6 +71,7 @@ class ff_memo_admin extends flatframe
     //========== app_prerun
     public function app_prerun()
     {
+        if ( ! $this->_check_whitelist() ){ die("IP ({$_SERVER['REMOTE_ADDR']}) が whitelistと適合しません");}
         $this->_set_session_param();
         if (@$this->_ff_config['flatmemo_all_password']) {
             require_once "exminimalauth.php";
@@ -1858,6 +1860,35 @@ DOC_END;
         }
         return $deleted_list;
     }
+
+
+
+    //========== _check_whitelist
+    public function _check_whitelist()
+    {
+        if ( @$this->_ff_config['whitelist'] ) {
+            $checker = new Whitelist\Check();
+            try {
+                $checker->whitelist( $this->_ff_config['whitelist'] );
+            }
+            catch (InvalidArgumentException $e) {
+                // thrown when an invalid definition is encountered
+                return false;
+            }
+
+            if ( ! @$_SERVER['REMOTE_ADDR'] ){ return false; }
+            $c = $checker->check($_SERVER['REMOTE_ADDR']);
+            // $this->dump( var_export($c) );
+            return $c;
+        } else {
+            return true;
+        }
+    }
+
+
+
+
+
 }
 
 

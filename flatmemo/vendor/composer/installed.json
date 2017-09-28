@@ -1,67 +1,5 @@
 [
     {
-        "name": "cebe/markdown",
-        "version": "1.1.1",
-        "version_normalized": "1.1.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/cebe/markdown.git",
-            "reference": "c30eb5e01fe021cc5bba2f9ee0eeef96d4931166"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/cebe/markdown/zipball/c30eb5e01fe021cc5bba2f9ee0eeef96d4931166",
-            "reference": "c30eb5e01fe021cc5bba2f9ee0eeef96d4931166",
-            "shasum": ""
-        },
-        "require": {
-            "lib-pcre": "*",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "cebe/indent": "*",
-            "facebook/xhprof": "*@dev",
-            "phpunit/phpunit": "4.1.*"
-        },
-        "time": "2016-09-14T20:40:20+00:00",
-        "bin": [
-            "bin/markdown"
-        ],
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "cebe\\markdown\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Carsten Brandt",
-                "email": "mail@cebe.cc",
-                "homepage": "http://cebe.cc/",
-                "role": "Creator"
-            }
-        ],
-        "description": "A super fast, highly extensible markdown parser for PHP",
-        "homepage": "https://github.com/cebe/markdown#readme",
-        "keywords": [
-            "extensible",
-            "fast",
-            "gfm",
-            "markdown",
-            "markdown-extra"
-        ]
-    },
-    {
         "name": "pear/pear_exception",
         "version": "v1.0.0",
         "version_normalized": "1.0.0.0",
@@ -82,7 +20,7 @@
         "require-dev": {
             "phpunit/phpunit": "*"
         },
-        "time": "2015-02-10T20:07:52+00:00",
+        "time": "2015-02-10 20:07:52",
         "type": "class",
         "extra": {
             "branch-alias": {
@@ -119,69 +57,6 @@
         ]
     },
     {
-        "name": "pear/net_url2",
-        "version": "v2.2.1",
-        "version_normalized": "2.2.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/pear/Net_URL2.git",
-            "reference": "43a87606daf52efe6685c92131be083143108e37"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/pear/Net_URL2/zipball/43a87606daf52efe6685c92131be083143108e37",
-            "reference": "43a87606daf52efe6685c92131be083143108e37",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.1.4"
-        },
-        "require-dev": {
-            "phpunit/phpunit": ">=3.3.0"
-        },
-        "time": "2016-04-18T22:24:01+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.2.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "Net/URL2.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "David Coallier",
-                "email": "davidc@php.net"
-            },
-            {
-                "name": "Tom Klingenberg",
-                "email": "tkli@php.net"
-            },
-            {
-                "name": "Christian Schmidt",
-                "email": "chmidt@php.net"
-            }
-        ],
-        "description": "Class for parsing and handling URL. Provides parsing of URLs into their constituent parts (scheme, host, path etc.), URL generation, and resolving of relative URLs.",
-        "homepage": "https://github.com/pear/Net_URL2",
-        "keywords": [
-            "PEAR",
-            "net",
-            "networking",
-            "rfc3986",
-            "uri",
-            "url"
-        ]
-    },
-    {
         "name": "pear/http_request2",
         "version": "v2.3.0",
         "version_normalized": "2.3.0.0",
@@ -207,7 +82,7 @@
             "lib-curl": "Allows using cURL as a request backend.",
             "lib-openssl": "Allows handling SSL requests when not using cURL."
         },
-        "time": "2016-02-13T20:20:39+00:00",
+        "time": "2016-02-13 20:20:39",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -260,7 +135,7 @@
         "require": {
             "php": ">=5.2.0"
         },
-        "time": "2012-11-23T13:33:24+00:00",
+        "time": "2012-11-23 13:33:24",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -306,7 +181,7 @@
             "php": ">=5.2.0",
             "phppeg/phppeg": "1.0.1"
         },
-        "time": "2012-11-23T14:05:51+00:00",
+        "time": "2012-11-23 14:05:51",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -331,6 +206,134 @@
         "keywords": [
             "hatena",
             "parser"
+        ]
+    },
+    {
+        "name": "cebe/markdown",
+        "version": "1.1.2",
+        "version_normalized": "1.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cebe/markdown.git",
+            "reference": "25b28bae8a6f185b5030673af77b32e1163d5c6e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/cebe/markdown/zipball/25b28bae8a6f185b5030673af77b32e1163d5c6e",
+            "reference": "25b28bae8a6f185b5030673af77b32e1163d5c6e",
+            "shasum": ""
+        },
+        "require": {
+            "lib-pcre": "*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "cebe/indent": "*",
+            "facebook/xhprof": "*@dev",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2017-07-16 21:13:23",
+        "bin": [
+            "bin/markdown"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "cebe\\markdown\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Carsten Brandt",
+                "email": "mail@cebe.cc",
+                "homepage": "http://cebe.cc/",
+                "role": "Creator"
+            }
+        ],
+        "description": "A super fast, highly extensible markdown parser for PHP",
+        "homepage": "https://github.com/cebe/markdown#readme",
+        "keywords": [
+            "extensible",
+            "fast",
+            "gfm",
+            "markdown",
+            "markdown-extra"
+        ]
+    },
+    {
+        "name": "pear/net_url2",
+        "version": "v2.2.2",
+        "version_normalized": "2.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/pear/Net_URL2.git",
+            "reference": "07fd055820dbf466ee3990abe96d0e40a8791f9d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/pear/Net_URL2/zipball/07fd055820dbf466ee3990abe96d0e40a8791f9d",
+            "reference": "07fd055820dbf466ee3990abe96d0e40a8791f9d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.1.4"
+        },
+        "require-dev": {
+            "phpunit/phpunit": ">=3.3.0"
+        },
+        "time": "2017-08-25 06:16:11",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "Net/URL2.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "include-path": [
+            "./"
+        ],
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "David Coallier",
+                "email": "davidc@php.net"
+            },
+            {
+                "name": "Tom Klingenberg",
+                "email": "tkli@php.net"
+            },
+            {
+                "name": "Christian Schmidt",
+                "email": "chmidt@php.net"
+            }
+        ],
+        "description": "Class for parsing and handling URL. Provides parsing of URLs into their constituent parts (scheme, host, path etc.), URL generation, and resolving of relative URLs.",
+        "homepage": "https://github.com/pear/Net_URL2",
+        "keywords": [
+            "PEAR",
+            "net",
+            "networking",
+            "rfc3986",
+            "uri",
+            "url"
         ]
     }
 ]
