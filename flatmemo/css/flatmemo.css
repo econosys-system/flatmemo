@@ -32,6 +32,9 @@ pre{
 	background-color: #f9f9f9;
 	border: 1px solid #ddd;
 }
+pre code {
+    tab-size: 3;
+}
 p{
 	margin: 10px 0 5px 0;
 }

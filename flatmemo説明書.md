@@ -1,10 +1,9 @@
 
-#flatmemo version2.10 説明書
+#flatmemo version2.13 説明書
 
 flatmemo Copyright 2002-2017 (c) econosys system [http://econosys-system.com/]()  
 flatmemo page [http://econosys-system.com/freesoft/flatmemo.html]()  
 
-Version  2.10 PHP7対応
 
 ##● flatmemoインストール方法
 

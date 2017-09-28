@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>{$config.page_title|escape}</title>
+{if $config.meta_robots}<meta name="robots" content="{$config.meta_robots}">
+{/if}
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <link rel="stylesheet" href="{$config.root_uri}/bootstrap/bootswatch/{$appearance.bootswatch_name}/bootstrap.min.css" media="screen">
 <link rel="stylesheet" href="{$config.root_uri}/css/parts.css">
@@ -17,11 +19,6 @@
 
 <script src="{$config.root_uri}/js/jquery-ui.min.js" defer></script>
 <script src="{$config.root_uri}/js/jquery.ui.touch-punch.min.js" defer></script>
-
-<!--[if lt IE 9]>
-<script src="./bootstrap/html5shiv.js" defer></script>
-<script src="./bootstrap/respond.min.js" defer></script>
-<![endif]-->
 
 {literal}
 <script type="text/javascript">

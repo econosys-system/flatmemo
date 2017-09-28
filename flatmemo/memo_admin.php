@@ -1,7 +1,7 @@
 <?php
 
 // flatmemo_admin
-// copyright (c) econosys system     http://econosys-system.com/
+// copyright (c) econosys system : https://econosys-system.com/
 // version 2.00 Bootswatch導入
 // version 2.01 細かいbug-fix
 // version 2.03 Dropzone.js導入
@@ -9,6 +9,7 @@
 // version 2.10 PHP7対応
 // version 2.11 emoji対応
 // version 2.12 [fix] configの無駄な設定 image_dir 削除
+// version 2.13 [fix] minimalauth判別ロジックの修正
 
 require_once "./flatframe.php";
 require_once "./flatframe/textdb.php";
@@ -73,7 +74,7 @@ class ff_memo_admin extends flatframe
         if (@$this->_ff_config['flatmemo_all_password']) {
             require_once "exminimalauth.php";
             $ma = new exminimalauth(array(
-                'admin_password' => $this->_ff_config['admin_password'] ,
+                'admin_password' => $this->_ff_config['flatmemo_all_password'] ,
             ));
             $ma->exminimalauth_login("{$this->q['_program_uri']}?cmd=exminimalauth_login_submit", (empty($_SERVER["HTTPS"]) ? "http://" : "https://") . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         }
@@ -650,8 +651,6 @@ DOC_END;
         // uploadify用の ランダム文字列, ファイル番号 生成
         $rnd_key = md5(time());
 
-        //$this->dump( $data_hash );
-
         $file_start_no = 1;
         $max_no = 0;
         if (isset($data_hash['attach_en_loop'])) {
@@ -665,7 +664,6 @@ DOC_END;
             }
             $file_start_no = $max_no + 1;
         }
-//$this->dump( $file_start_no );
 
         $this->template->assign(array("rnd_key" => $rnd_key));
 
@@ -753,9 +751,6 @@ DOC_END;
         // 2. 添付ファイルの移動 （IDがわかっているので先に移動する）
         // $this->_attach_file_move_uploadify($this->q['data_id'], $this->q['file_start_no'], $ajax_filelist);
         $this->_attach_file_move_dropzone($this->q['data_id'], $this->q['file_start_no'], $dropzone_filelist);
-
-
-//		$this->dump( $this->q ); die;
 
         // 3. 添付ファイルリスト作成
         $separator = '';

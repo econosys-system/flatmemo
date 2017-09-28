@@ -1,13 +1,14 @@
 <?php
 
 // flatmemo
-// copyright (c) econosys system     http://econosys-system.com
+// copyright (c) econosys system : https://econosys-system.com/
 // version 2.00 Bootswatch導入
 // version 2.01 細かいbug-fix
 // version 2.02 最近のメモ取得のbug-fix
 // version 2.04 minimalauth導入
 // version 2.10 PHP7対応
 // version 2.11 emoji対応
+// version 2.13 [fix] minimalauth判別ロジックの修正
 
 require_once "./flatframe.php";
 require_once "vendor/autoload.php";
@@ -47,7 +48,7 @@ class ff_memo extends flatframe
     public function app_prerun()
     {
         $this->_set_session_param();
-        if (@$this->_ff_config['admin_password']) {
+        if (@$this->_ff_config['flatmemo_all_password']) {
             require_once "exminimalauth.php";
             $ma = new exminimalauth(array(
                 'admin_password' => $this->_ff_config['flatmemo_all_password'] ,

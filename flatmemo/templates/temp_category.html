@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>{if $cmd=="archive" || $cmd=="write_process" || $cmd == "rewrite_all_process" }{$data_loop.0.title_name|escape}｜{$config.page_title}{else}{$category_name}{if $tag_name}｜{$tag_name|escape}{/if}｜{$config.page_title}{/if}</title>
+{if $config.meta_robots}<meta name="robots" content="{$config.meta_robots}">
+{/if}
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <link rel="stylesheet" href="{$config.root_uri}/bootstrap/bootswatch/{$appearance.bootswatch_name}/bootstrap.min.css" media="screen">
 <link rel="stylesheet" href="{$config.root_uri}/css/parts.css">
