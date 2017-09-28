@@ -14,20 +14,21 @@
     delete()
     delete_all()
     move_top()
-
-    or_search();	// OR条件で検索
-
+    or_search()	// OR条件で検索
+	psearch()	// 正規表現で検索
     help()
 */
 
 
     // Version 0.30 ：PHP7対応
+    // Version 0.31 ：[add] psearch();
+    // Version 0.32 ：[add] Spyc.phpがある場合は優先して読みこむように変更
 
 
 
 class textdb
 {
-    public $version          = '0.30';
+    public $version          = '0.32';
     public $notice           = '本プログラムは econosys system の著作物です。MIT License copyright (c)econosys system http://econosys-system.com/';
     public $table_name       = '';
     public $ext              = '';
@@ -77,7 +78,13 @@ class textdb
         }
         // cache ない場合
         else {
-            require_once('spyc/spyc.php');
+
+			if (is_file(dirname(__FILE__).DIRECTORY_SEPARATOR.'spyc'.DIRECTORY_SEPARATOR.'Spyc.php')) {
+			    require_once 'spyc/Spyc.php';
+			} else {
+			    require_once 'spyc/spyc.php';
+			}
+
             $spyc = new Spyc();
             $this->_config = $spyc->YAMLLoad($yml_filename);
 
@@ -440,7 +447,7 @@ class textdb
         }
 
         if ($this->dump==1) {
-            $this->dump($read_data_loop);
+            // $this->dump($read_data_loop);
             // 時間の計測 end
             $time_end=$this->_getmicrotime();
             $time_work=$time_end - $time_start;
@@ -519,10 +526,12 @@ class textdb
             } else {
                 $hash_total_no = count($hash);
                 foreach ($hash as $k => $v) {
+
                     if (strpos($h[$k], $hash[$k]) !== false) {
                         $flag = true;
                         break;
                     }
+
                 }
             }
             if ($flag) {
@@ -604,6 +613,141 @@ class textdb
 
         return $out;
     }
+
+
+
+    //================= psearch
+    public function psearch($hash=array(), $start=0, $limit=5)
+    {
+        $time_start=0;
+        $time_end=0;
+        $time_work=0;
+
+        if ($this->dump==1) {
+            $time_start=$this->_getmicrotime();
+        }
+
+        // ORDER_BY
+        $order_by = false;
+        if (isset($hash['ORDER_BY'])) {
+            if ($hash['ORDER_BY']) {
+                $order_by = $hash['ORDER_BY'];
+                unset($hash['ORDER_BY']);
+            }
+        }
+
+        $select_all_flag = false;
+        if (count($hash)==0) {
+            $select_all_flag = true;
+        }
+
+        if ($this->dump==1) {
+            print "============================== <br>SELECT  start:{$start} limit:{$limit} order_by : {$order_by}\n";
+            $this->dump($hash);
+        }
+
+        // check columns
+        $this->_check_columns($hash);
+
+        // filename
+        $filename     = "{$this->data_dir}/{$this->table_name}.{$this->ext}";
+
+        // read_data(select)
+        $data_i   = 0;
+        $data_sum = 0;
+        $debug_i  = 0;
+
+        // ORDER BY が指定してある時はとりあず条件に合うデータを全件取得してからソート
+        $limit_org = 0;
+        if ($order_by) {
+            $limit_org = $limit;
+            $limit = 99999;
+        }
+
+        $read_data_loop = array();
+        $primary_column_name = $this->primary[0];
+        $fp =fopen($filename, 'r') or die("textdb:error cannot open count file ({$filename})");
+        while (!feof($fp)) {
+            $debug_i++;
+            $line = fgets($fp, 99999);
+            $h = $this->_read_data($line);
+            // $this->dump($h);
+            if ($h[$primary_column_name] == false) {
+                continue;
+            }    // skip null line.
+            if (preg_match('{^#}', $line)) {
+                continue;
+            }    // skip Comment line.
+
+            $flag = false;
+
+            if ($select_all_flag) {
+                $flag = true;
+                $hash_total_no = 0;
+                $ture_total_no = 0;
+            } else {
+                $hash_total_no = count($hash);
+                $ture_total_no = 0;
+                foreach ($hash as $k => $v) {
+                    // print "キーは（{$k}）値（{$v}）で検索<br>データファイルのキー（{$k}）の値は（{$h[$k]}） <br>\n";
+                    if ( preg_match($hash[$k],$h[$k]) ){
+                    // if (strcmp($h[$k], $hash[$k])==0) {
+                        $flag = true;
+                        $ture_total_no++;
+                    }
+                    // else{ $flag = false; }
+                }
+            }
+            if ($flag && $hash_total_no==$ture_total_no) {
+                if ($data_sum >= $limit) {
+                    break;
+                } elseif ($data_i >= $start && $data_sum < $limit) {
+                    // decode
+                    $h = $this->_decode_csv($h);
+                    array_push($read_data_loop, $h);
+                    $data_sum++;
+                }
+                $data_i++;
+            }
+        }
+
+
+        // ORDER_BY
+        if ($order_by && (count($read_data_loop) > 0)) {
+            // ※ カラムチェック
+            //$this->dump($order_by);
+            $column = false;
+            $order  = false;
+            if (preg_match('/ /', $order_by)) {
+                list($column, $order) = explode(' ', $order_by);
+            } else {
+                $column = $order_by;
+            }
+            //$this->dump($column);
+            $hash = array( $column => 'dummy' );
+            $this->_check_columns($hash);
+
+            foreach ($read_data_loop as $k => $v) {
+                $sort_key[$k] = $v[$column];
+            }
+            if (preg_match('/DESC$/', $order_by)) {
+                array_multisort($sort_key, SORT_DESC, $read_data_loop);
+            } else {
+                array_multisort($sort_key, SORT_ASC, $read_data_loop);
+            }
+            $read_data_loop = array_slice($read_data_loop, 0, $limit_org);
+        }
+
+        if ($this->dump==1) {
+            // $this->dump($read_data_loop);
+            $time_end=$this->_getmicrotime();
+            $time_work=$time_end - $time_start;
+            $this->dump("time:{$time_work}\n");
+        }
+
+        return $read_data_loop;
+    }
+
 
 
 
@@ -800,7 +944,9 @@ class textdb
         foreach ($this->columns as $k => $v) {
             if (strcmp($primary_column_name, $v)==0) {
                 $data = $num;
-            } elseif (array_key_exists($v, $hash)) {
+            }
+
+            elseif (array_key_exists($v, $hash)) {
                 $data = $hash[$v];
                 //$this->dump($data);
             } else {
