@@ -8,6 +8,9 @@ flatmemo_all_password:
 # <meta name="robots" content=""> を指定したいときは記述します。例:（noindex,nofollow）
 meta_robots:
 
+# URLの /memo.php/ を削除したい時は 1 をセットしてください
+short_url: 1
+
 # Smarty（テンプレート）キャッシュを使用するか？使用すると表示が高速になります。（ 【1】時使用する    【0】使用しない ）
 use_smarty_cache: 0
 

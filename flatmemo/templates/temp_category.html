@@ -74,8 +74,8 @@ $(function(){
 
 <div class="row">
 <div class="col-xs-12">
-{if $desc_name}<h1 class="fm_cate_title">{$desc_name|escape|nl2br}{if $tag_name}：<small>タグ「{$tag_name|escape}」での検索</small>{/if}</h1>
-{elseif $tag_name}<h1 class="fm_cate_title"><small>タグ「{$tag_name|escape}」での検索</small></h1>
+{if $desc_name}<div class="fm_cate_title">{$desc_name|escape|nl2br}{if $tag_name}：<small>タグ「{$tag_name|escape}」での検索</small>{/if}</div>
+{elseif $tag_name}<div class="fm_cate_title"><small>タグ「{$tag_name|escape}」での検索</small></div>
 {/if}
 </div>
 </div><!-- /.row -->

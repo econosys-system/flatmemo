@@ -10,6 +10,7 @@
 // version 2.11 emoji対応
 // version 2.13 [fix] minimalauth判別ロジックの修正
 // version 2.14 [add] whitelist追加
+// version 2.20 [add] short_url 対応
 
 require_once "./flatframe.php";
 require_once "vendor/autoload.php";
@@ -65,6 +66,11 @@ class ff_memo extends flatframe
             define('__DIR__', dirname(__FILE__));
         }
         $this->_ff_config['memo_uri']      = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['memo_file']);
+        // short_url=1 の時は urlから memo.php を取り除く
+        if ( @$this->_ff_config['short_url'] ){
+            $this->_ff_config['memo_uri'] = preg_replace("{/memo\.php}","",$this->_ff_config['memo_uri']);
+        }
+// $this->dump( $this->_ff_config );
         $this->_ff_config['admin_uri']     = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['admin_file']);
         $this->_ff_config['data_file_uri'] = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['data_file_dir']);
         $this->_ff_config['icon_uri']      = $this->_make_uri($this->q['_program_uri'], $this->_ff_config['icon_dir']);
@@ -156,6 +162,11 @@ class ff_memo extends flatframe
         //$header_category_loop = $this->_get_header_category();
         $this->template->assign(array("header_category_loop" => $category_loop));
 
+        // short_url=1 の時は urlから memo.php を取り除く
+        if ( @$this->_ff_config['short_url'] ){
+            $this->q['_program_uri'] = preg_replace("{/memo\.php}","",$this->q['_program_uri']);
+            $this->q['_program_name'] = preg_replace("{/memo\.php}","",$this->q['_program_name']);
+        }
         $this->template->assign($this->q);
         $this->template->assign(array("category_loop" => $category_loop));
         $this->template->assign(array("closet_loop" => $closet_loop));
@@ -260,6 +271,12 @@ class ff_memo extends flatframe
         }
         $recent_loop = $this->_get_header_recent_entry();
         $now_category_tag_loop = $this->_get_now_category_tag_loop_quicklink($category_id);
+        // short_url=1 の時は urlから memo.php を取り除く
+        if ( @$this->_ff_config['short_url'] ){
+            $this->q['_program_uri'] = preg_replace("{/memo\.php}","",$this->q['_program_uri']);
+            $this->q['_program_name'] = preg_replace("{/memo\.php}","",$this->q['_program_name']);
+        }
+// $this->dump( $this->q );
         $this->template->assign($this->q);
         $this->template->assign($category_hash);
 

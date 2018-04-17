@@ -84,10 +84,13 @@ function _doc_root(){
 	  doc_root = result[0].replace(/memo(_admin)?\.php/,'');
 	  return doc_root;
   }
-  else{
+  else if(u.match(/^http.+?data\/archives/)){
 	  result = u.match(/^http.+?data\/archives/);
 	  doc_root = result[0].replace(/data\/archives/,'');
 	  return doc_root;
+  } else{
+      doc_root = memo_adi_uri.replace(/memo(_admin)?\.php/,'');
+      return doc_root;
   }
 
 //  alert(doc_root);

@@ -11,6 +11,7 @@
 // version 2.12 [fix] configの無駄な設定 image_dir 削除
 // version 2.13 [fix] minimalauth判別ロジックの修正
 // version 2.14 [add] whitelist追加
+// version 2.50
 
 require_once "./flatframe.php";
 require_once "./flatframe/textdb.php";
@@ -23,6 +24,7 @@ class ff_memo_admin extends flatframe
     //==========
     public function __construct($configfile)
     {
+        set_time_limit();
         $this->_ff_configfile=$configfile;
     }
 
@@ -1190,6 +1192,10 @@ DOC_END;
         $this->template->assign(array("recent_loop" => $recent_loop));
 
 
+        // short_url=1 の時は urlから memo.php を取り除く
+        if ( @$this->_ff_config['short_url'] ){
+            $this->q['_program_uri'] = preg_replace("{/memo\.php}","",$this->q['_program_uri']);
+        }
         $this->template->assign($this->q);
         $this->template->assign(array("back_uri" => $back_uri));
         $this->template->assign($category_hash);
